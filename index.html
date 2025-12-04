@@ -54,7 +54,7 @@
         /* Tens Blocks (Stacks) - Green: #12a553 (10 units) */
         .ten-block {
             width: 0.7em; 
-            height: 7em; /* 10 * 0.7em */
+            height: 5em; 
             background-color: #12a553; 
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             border: 1px solid #0a6936;
@@ -62,8 +62,8 @@
 
         /* Hundreds Block (Plates) - Burnt Orange: #cc5500 (100 units) */
         .hundred-block {
-            width: 7em;  /* 10 * 0.7em */
-            height: 7em; /* 10 * 0.7em */
+            width: 5em;  
+            height: 5em; 
             background-color: #cc5500;
             box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
             border: 1px solid #994000;
@@ -77,23 +77,27 @@
             margin-right: 1.0em;
         }
 
+        /* Ones Wrapper needs to wrap blocks, keeping the blocks at the bottom of the card */
         .ones-wrapper {
             display: flex;
             flex-wrap: wrap;
             gap: 0.3em;
-            max-width: 5em;
+            /* Adjust max-width slightly if needed, but 5em is fine */
+            max-width: 5em; 
+            align-content: flex-end; /* This ensures the blocks sit at the bottom */
         }
 
         /* Single Card Display */
         #single-card-display {
-            min-height: 200px; /* Ensure sufficient vertical space */
-            aspect-ratio: 16 / 9; /* Make the display area wider for better block visualization */
-            background-color: #f7f7f7;
+            /* min-height changed to 5em, making it fluid but ensuring enough vertical space for the tallest blocks */
+            min-height: 5em; 
+            /* Card background is white */
+            background-color: white; 
         }
 
         /* Utility to make the blocks render neatly inside the display */
         .block-display {
-            min-height: 8em; 
+            min-height: 5em; /* Adjusted to match the new block height */
             align-items: flex-end;
             display: flex; 
             justify-content: center;
@@ -105,8 +109,9 @@
         .text-main-blue {
             color: #0f6bb4 !important;
         }
+        /* Confirmed: Text color is the same as the ten-block color: #12a553 */
         .text-main-green {
-            color: #12a553 !important;
+            color: #12a553 !important; 
         }
         .text-burnt-orange {
              color: #cc5500 !important;
@@ -120,73 +125,78 @@
             background-color: #0a4f77;
         }
 
-        /* Problem Area Background */
-        .bg-light-blue-area {
-            background-color: #e6f0f7;
-        }
-
         /* Success/Error Feedback */
+        /* Updated to use the green block color #12a553 */
         .text-feedback-green {
-            color: #10b981;
+            color: #12a553;
         }
+        /* Red is confirmed to be #d0021b */
         .text-feedback-red {
-            color: #d0021b; /* UPDATED to the specified color */
+            color: #d0021b; 
         }
     </style>
 </head>
 <body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
-    <div id="game-container" class="w-full max-w-xl bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+    <!-- Main container has a white background and no external shadow -->
+    <div id="game-container" class="w-full max-w-xl bg-white rounded-xl">
         
-        <!-- Header, Score, and Rules Button -->
-        <div class="text-center mb-6">
+        <!-- 1. Title and How to Play Button (on white background) -->
+        <div class="text-center pt-6 px-6 sm:pt-8 sm:px-8">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">Counting</h1>
-            
-            <div id="score-display" class="mt-2 text-xl font-semibold text-main-blue">Score: 0</div>
-            
-            <button id="show-rules-button" class="mt-4 text-sm font-semibold text-white py-2 px-4 rounded-lg shadow-md transition duration-150 bg-main-blue">
-                Show Rules
+            <button id="show-rules-button" class="text-sm font-semibold text-white py-2 px-4 rounded-lg shadow-md transition duration-150 bg-main-blue mb-4">
+                How to Play
             </button>
         </div>
 
-        <!-- Block Display Area -->
-        <div id="single-card-display" class="p-4 rounded-xl shadow-md border-2 border-gray-200 mb-6">
-            <!-- Blocks will be rendered here -->
+        <!-- 2. Score Bar (Gray Background: #f3f4f5). NOW ROUNDED and full width to match playing area -->
+        <!-- Removed mx-6 and updated padding to p-6 for alignment -->
+        <div class="bg-[#f3f4f5] p-6 text-center rounded-xl">
+            <div id="score-display" class="text-xl font-semibold text-gray-700">Score: 0</div>
         </div>
-
-        <!-- Input Area and Check Button -->
-        <div class="text-center p-4">
-            <!-- Status Message Area (Moved above the input) -->
-            <div id="status-message" class="text-xl font-semibold min-h-[1.5rem] mb-3">What number is shown?</div>
+        
+        <!-- 3. Pale Blue Playing Area: #e6f0f7. Added margin and padding/rounding adjusted. -->
+        <!-- The mt-4 margin creates the white gap -->
+        <div class="bg-[#e6f0f7] p-6 sm:p-8 rounded-xl mt-4">
             
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
-                <!-- Input is now blank (placeholder handles prompt) -->
-                <input type="number" id="user-input" placeholder="" class="p-3 border-2 border-gray-300 rounded-lg text-center text-2xl font-bold w-full sm:w-40 focus:border-main-blue focus:ring-1 focus:ring-main-blue" min="0" max="299">
-                <!-- Button text changed to "Submit" -->
-                <button id="check-button" class="bg-main-blue text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-200 w-full sm:w-auto">
-                    Submit
-                </button>
+            <!-- Block Display Area (background is white) -->
+            <!-- UPDATED: Changing pb-3 to pb-4 for larger bottom padding (16px) -->
+            <div id="single-card-display" class="px-4 pt-4 pb-4 rounded-xl shadow-md border-2 border-gray-200">
+                <!-- Blocks will be rendered here -->
+            </div>
+
+            <!-- Status Message Area (MOVED BELOW CARD) -->
+            <div id="status-message" class="text-center text-xl font-semibold min-h-[1.5rem] mt-4 mb-3">What number is shown?</div>
+
+            <!-- Input Area and Check Button -->
+            <div class="text-center">
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
+                    <input type="number" id="user-input" placeholder="" class="p-3 border-2 border-gray-300 rounded-lg text-center text-2xl font-bold w-full sm:w-40 focus:border-main-blue focus:ring-1 focus:ring-main-blue" min="0" max="299">
+                    <button id="check-button" class="bg-main-blue text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-200 w-full sm:w-auto">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Rules Modal -->
+        <!-- Rules Modal (kept outside the flow) -->
         <div id="rules-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
             <div class="bg-white p-8 rounded-xl shadow-3xl w-full max-w-md transform transition-all duration-300 scale-95">
-                <h3 class="text-3xl font-bold text-main-blue mb-4 border-b pb-2">Game Rules</h3>
+                <h3 class="text-3xl font-bold text-main-blue mb-4 border-b pb-2">How to Play</h3>
                 <div class="text-gray-700 space-y-3 mb-6">
                     <p>The goal is to match the number shown by correctly counting the value of the colored blocks and entering the number.</p>
                     
                     <p class="font-semibold text-lg">Block Values:</p>
-                    <!-- RULES confirmed to use consistent coloring classes -->
                     <ul class="list-none ml-0 space-y-2 text-left">
                         <li class="text-gray-700"><span class="font-bold text-burnt-orange">Orange Plates:</span> 100</li>
+                        <!-- This line uses text-main-green, which is #12a553 -->
                         <li class="text-gray-700"><span class="font-bold text-main-green">Green Stacks:</span> 10</li>
                         <li class="text-gray-700"><span class="font-bold text-main-blue">Blue Squares:</span> 1</li>
                     </ul>
                     
                     <p class="pt-2">Keep guessing until you find the correct number!</p>
                 </div>
-                <button id="close-rules-button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg transition duration-200">
-                    Close
+                <button id="close-rules-button" class="bg-main-blue hover:bg-main-blue/90 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+                    Got it!
                 </button>
             </div>
         </div>
@@ -207,7 +217,7 @@
         const scoreDisplayEl = document.getElementById('score-display');
         const userInput = document.getElementById('user-input');
         const checkButton = document.getElementById('check-button');
-        const statusMessageEl = document.getElementById('status-message'); // Now holds the prompt/status
+        const statusMessageEl = document.getElementById('status-message'); 
         
         // Rules Modal Elements
         const showRulesButton = document.getElementById('show-rules-button');
