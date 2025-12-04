@@ -130,7 +130,7 @@
             color: #10b981;
         }
         .text-feedback-red {
-            color: #dc2626;
+            color: #d0021b; /* UPDATED to the specified color */
         }
     </style>
 </head>
@@ -139,7 +139,7 @@
         
         <!-- Header, Score, and Rules Button -->
         <div class="text-center mb-6">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">Count the Blocks</h1>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Counting</h1>
             
             <div id="score-display" class="mt-2 text-xl font-semibold text-main-blue">Score: 0</div>
             
@@ -155,16 +155,17 @@
 
         <!-- Input Area and Check Button -->
         <div class="text-center p-4">
-            <label for="user-input" class="text-xl font-semibold text-gray-700 block mb-3">What number is shown?</label>
+            <!-- Status Message Area (Moved above the input) -->
+            <div id="status-message" class="text-xl font-semibold min-h-[1.5rem] mb-3">What number is shown?</div>
+            
             <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3">
-                <!-- Input max attribute is 299 for the new MAX_NUMBER limit -->
-                <input type="number" id="user-input" placeholder="Enter your count" class="p-3 border-2 border-gray-300 rounded-lg text-center text-2xl font-bold w-full sm:w-40 focus:border-main-blue focus:ring-1 focus:ring-main-blue" min="0" max="299">
+                <!-- Input is now blank (placeholder handles prompt) -->
+                <input type="number" id="user-input" placeholder="" class="p-3 border-2 border-gray-300 rounded-lg text-center text-2xl font-bold w-full sm:w-40 focus:border-main-blue focus:ring-1 focus:ring-main-blue" min="0" max="299">
+                <!-- Button text changed to "Submit" -->
                 <button id="check-button" class="bg-main-blue text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-200 w-full sm:w-auto">
-                    Check
+                    Submit
                 </button>
             </div>
-            <!-- Status Message Area -->
-            <div id="status-message" class="mt-4 text-lg font-semibold min-h-[1.5rem]"></div>
         </div>
 
         <!-- Rules Modal -->
@@ -175,7 +176,7 @@
                     <p>The goal is to match the number shown by correctly counting the value of the colored blocks and entering the number.</p>
                     
                     <p class="font-semibold text-lg">Block Values:</p>
-                    <!-- RULES SIMPLIFIED as requested -->
+                    <!-- RULES confirmed to use consistent coloring classes -->
                     <ul class="list-none ml-0 space-y-2 text-left">
                         <li class="text-gray-700"><span class="font-bold text-burnt-orange">Orange Plates:</span> 100</li>
                         <li class="text-gray-700"><span class="font-bold text-main-green">Green Stacks:</span> 10</li>
@@ -206,7 +207,7 @@
         const scoreDisplayEl = document.getElementById('score-display');
         const userInput = document.getElementById('user-input');
         const checkButton = document.getElementById('check-button');
-        const statusMessageEl = document.getElementById('status-message');
+        const statusMessageEl = document.getElementById('status-message'); // Now holds the prompt/status
         
         // Rules Modal Elements
         const showRulesButton = document.getElementById('show-rules-button');
@@ -272,9 +273,11 @@
             // Render the blocks
             singleCardDisplay.innerHTML = renderBlocks(hundreds, tens, ones);
             
-            // Clear input and feedback
+            // Clear input and set initial prompt
             userInput.value = '';
-            statusMessageEl.textContent = '';
+            // Reset message to the default prompt
+            statusMessageEl.textContent = 'What number is shown?';
+            statusMessageEl.classList.remove('text-feedback-green', 'text-feedback-red');
             userInput.focus();
         }
 
@@ -318,7 +321,7 @@
                 statusMessageEl.classList.remove('text-feedback-green');
                 statusMessageEl.classList.add('text-feedback-red');
                 
-                // Clear input for easy re-entry
+                // Clear input for easy re-entry (it was already clearing, but ensures it happens)
                 userInput.value = ''; 
                 userInput.focus();
             }
