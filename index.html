@@ -31,21 +31,13 @@
 
         /* --- Block Sizing and Appearance --- */
 
-        /* Responsive Font Sizing for Blocks (Base Unit Adjustment) */
-        /* Increased base font size for larger, clearer blocks in the single display area */
-        #single-card-display {
-            font-size: 15px; /* Base size for mobile blocks */
-        }
-        @media (min-width: 640px) {
-            #single-card-display {
-                font-size: 18px; /* Larger size for desktop blocks */
-            }
-        }
+        /* Responsive Font Sizing: REMOVED from display as blocks are now fixed in PX */
+        /* #single-card-display and media queries are removed to use fixed block sizes */
         
         /* Ones Blocks (Squares) - Blue: #0f6bb4 (1 unit) */
         .one-block {
-            width: 0.7em; 
-            height: 0.7em;
+            width: 18px; /* Updated to 18px */
+            height: 18px; /* Updated to 18px */
             background-color: #0f6bb4; 
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
             border: 1px solid #094777; 
@@ -53,8 +45,8 @@
 
         /* Tens Blocks (Stacks) - Green: #12a553 (10 units) */
         .ten-block {
-            width: 0.7em; 
-            height: 5em; 
+            width: 18px; /* Updated to 18px */
+            height: 75px; /* Updated to 75px */
             background-color: #12a553; 
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             border: 1px solid #0a6936;
@@ -62,42 +54,41 @@
 
         /* Hundreds Block (Plates) - Burnt Orange: #cc5500 (100 units) */
         .hundred-block {
-            width: 5em;  
-            height: 5em; 
+            width: 75px;  /* Updated to 75px */
+            height: 75px; /* Updated to 75px */
             background-color: #cc5500;
             box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
             border: 1px solid #994000;
-            margin-right: 1.5em; /* Space from other units */
+            margin-right: 25px; /* Converted from 1.5em to px */
         }
 
         /* Block Layout Wrappers */
         .tens-wrapper {
             display: flex;
-            gap: 0.3em;
-            margin-right: 1.0em;
+            gap: 5px; /* Converted from 0.3em to px */
+            margin-right: 20px; /* Converted from 1.0em to px */
         }
 
         /* Ones Wrapper needs to wrap blocks, keeping the blocks at the bottom of the card */
         .ones-wrapper {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.3em;
-            /* Adjust max-width slightly if needed, but 5em is fine */
-            max-width: 5em; 
+            gap: 5px; /* Converted from 0.3em to px */
+            max-width: 75px; /* Adjusted to accommodate 3 blocks (18*3 + 5*2 = 64px) */
             align-content: flex-end; /* This ensures the blocks sit at the bottom */
         }
 
         /* Single Card Display */
         #single-card-display {
-            /* min-height changed to 5em, making it fluid but ensuring enough vertical space for the tallest blocks */
-            min-height: 5em; 
+            /* Set min-height to accommodate the tallest block (75px) */
+            min-height: 100px; /* Added some extra room for padding/visual space */
             /* Card background is white */
             background-color: white; 
         }
 
         /* Utility to make the blocks render neatly inside the display */
         .block-display {
-            min-height: 5em; /* Adjusted to match the new block height */
+            min-height: 75px; /* Matches the height of the tallest block */
             align-items: flex-end;
             display: flex; 
             justify-content: center;
@@ -109,7 +100,6 @@
         .text-main-blue {
             color: #0f6bb4 !important;
         }
-        /* Confirmed: Text color is the same as the ten-block color: #12a553 */
         .text-main-green {
             color: #12a553 !important; 
         }
@@ -126,11 +116,9 @@
         }
 
         /* Success/Error Feedback */
-        /* Updated to use the green block color #12a553 */
         .text-feedback-green {
             color: #12a553;
         }
-        /* Red is confirmed to be #d0021b */
         .text-feedback-red {
             color: #d0021b; 
         }
